@@ -26,9 +26,11 @@ class FirstPage(QMainWindow):
         self.rubik_3D.hide()
         
         self.white_widget = None
+        
         self.list_buttons = []
+        self.list_buttons_colors = []
         self.MOVES = ["up", "down", "right", "left"]
-        self.COLORS = ["Yellow", "Red", "Blue", "Green", "Black", "White"]
+        self.COLORS = ["White", "Yellow", "Red", "Orange", "Blue", "Green"]
 
     def show_Window_title(self, title_index = True):     
         title = "Rubik's Cube Solver" if title_index else "Rotate the cube."
@@ -131,13 +133,15 @@ class FirstPage(QMainWindow):
         self.hide_manually_button()
         if self.white_widget is None:
             self.widget_3d = QLabel(self)
-            self.widget_3d.setGeometry(10, 10, 580, 580)
+            self.widget_3d.setGeometry(10, 10, 580, 500)
             self.widget_3d.setStyleSheet(
             "   background-color: white;" 
             "   border-radius: 10px;"
             )
         self.widget_3d.show()
         self.show_buttons()
+        self.show_colors()
+
     
     def show_buttons(self):
 
@@ -167,3 +171,46 @@ class FirstPage(QMainWindow):
             self.list_buttons.append(button)
 
         for button in self.list_buttons:  button.show()
+        
+    def show_colors(self):
+        title_color = QLabel("Choose the \n color:", self)
+        title_color.setGeometry(10, 520, 100, 50)
+
+        # add a shadow effect to the title label
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(30)
+        shadow.setColor(QColor(0, 0, 0, 100))
+        shadow.setOffset(0, 0)
+        title_color.setGraphicsEffect(shadow)
+
+        font = QFont()
+        font.setPointSize(10)
+        font.setFamily("Gabriola")
+        font.setBold(True)
+
+        title_color.setFont(font)
+        title_color.setAlignment(Qt.AlignCenter)
+        title_color.setStyleSheet("color: #a3f9ff;")
+
+        iteration = 1
+        for color in self.COLORS:
+            button = QPushButton("{}".format(color), self)
+            button.setGeometry(40 + 80 * iteration, 535, 60, 30)
+            button.setStyleSheet(
+                "QPushButton {"
+                "   color: #000000;"
+                "   font-size: 12px;"
+                "   font-weight: bold;"
+                "}"
+                "QPushButton:hover {"
+                "   background-color: #{color};" 
+                "   color: white;"
+                "}"
+            )
+            iteration += 1
+            self.list_buttons_colors.append(button)
+            
+        
+        for button in self.list_buttons_colors:  button.show()
+
+        title_color.show()
