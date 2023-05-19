@@ -1,29 +1,24 @@
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
-class FirstPage(QMainWindow):
+class FirstPage(QMainWindow):    
     def __init__(self):
         super().__init__()
 
-        # set the window title
         self.setWindowTitle("Rubik's cube solver")
-        # set a fixed size to the window
         self.setFixedSize(1200, 600)
-        # add the app's icon
+
         self.setWindowIcon(QIcon("Images/logo.png"))
 
-        # create a centralWidget
         self.centralWidget = QWidget(self)
         self.centralWidget.setFixedSize(1200, 600)
-
         self.centralWidget.setStyleSheet("""background-image: url(Images/background.jpg);
                             background-size: cover;
                             background-repeat: no-repeat;
                            """)
-        
         self.setCentralWidget(self.centralWidget)
 
-        self.show_Window_title()
+        self.show_Window_title(1)
         self.show_help_button1()
         self.show_manualy_button()
 
@@ -32,11 +27,14 @@ class FirstPage(QMainWindow):
         
         self.white_widget = None
         self.list_buttons = []
+        self.MOVES = ["up", "down", "right", "left"]
+        self.COLORS = ["Yellow", "Red", "Blue", "Green", "Black", "White"]
 
-    def show_Window_title(self):
+    def show_Window_title(self, title_index = True):     
+        title = "Rubik's Cube Solver" if title_index else "Rotate the cube."
         # create a label for the title text
-        self.titleLabel = QLabel("Rubik's Cube Solver", self)
-        self.titleLabel.setGeometry(0, 150, 1200, 200)
+        self.titleLabel = QLabel(title, self)
+        self.titleLabel.setGeometry(0, 150, 1200, 200) if title_index else self.titleLabel.setGeometry(610, 80, 580, 50)
 
         # add a shadow effect to the title label
         shadow = QGraphicsDropShadowEffect()
@@ -46,7 +44,7 @@ class FirstPage(QMainWindow):
         self.titleLabel.setGraphicsEffect(shadow)
 
         font = QFont()
-        font.setPointSize(100)
+        font.setPointSize(100) if title_index else font.setPointSize(30)
         font.setFamily("Gabriola")
         font.setBold(True)
 
@@ -54,17 +52,14 @@ class FirstPage(QMainWindow):
         self.titleLabel.setAlignment(Qt.AlignCenter)
         self.titleLabel.setStyleSheet("color: #a3f9ff;")
 
+        self.titleLabel.show()
+
     def hide_window_title(self):
         self.titleLabel.hide()
 
     def show_help_button1(self):
-        # Create a button
         self.help_button1 = QPushButton("Help!", self)
-
-        # Set the button position and size
         self.help_button1.setGeometry(1100, 20, 80, 25)
-
-         # Set the button style using CSS
         self.help_button1.setStyleSheet(
             "QPushButton {"
             "   background-color: #a3f9ff;"
@@ -120,18 +115,15 @@ class FirstPage(QMainWindow):
         self.button2.hide()
 
     def show_help(self):
-        # create a new dialog window
         help_dialog = QDialog(self)
         help_dialog.setWindowTitle("Help")
         help_dialog.setModal(True)
 
-        # add some text to the dialog
         help_label = QLabel("This is some help text. Click the close button to close this window.")
         help_layout = QVBoxLayout()
         help_layout.addWidget(help_label)
         help_dialog.setLayout(help_layout)
 
-        # display the dialog window
         help_dialog.exec_()
 
     def show_white_widget(self):
@@ -144,52 +136,26 @@ class FirstPage(QMainWindow):
             "   background-color: white;" 
             "   border-radius: 10px;"
             )
-
-            #pixmap = QPixmap(200, 200)
-            #pixmap.fill(Qt.white)
-            #self.white_widget.setPixmap(pixmap)
-        
         self.widget_3d.show()
         self.show_buttons()
     
     def show_buttons(self):
 
-        self.buttonLabel = QLabel("Rotate the cube.", self)
-        self.buttonLabel.setGeometry(610, 80, 580, 50)
-
-        # add a shadow effect to the title label
-        shadow = QGraphicsDropShadowEffect()
-        shadow.setBlurRadius(30)
-        shadow.setColor(QColor(0, 0, 0, 100))
-        shadow.setOffset(0, 0)
-        self.buttonLabel.setGraphicsEffect(shadow)
-
-        font = QFont()
-        font.setPointSize(40)
-        font.setFamily("Gabriola")
-        font.setBold(True)
-
-        self.buttonLabel.setFont(font)
-        self.buttonLabel.setAlignment(Qt.AlignCenter)
-        self.buttonLabel.setStyleSheet("color: #a3f9ff;")
-        self.buttonLabel.show()
+        self.show_Window_title(False)
 
         # list of buttons
     
         iteration = 2
-        for name in ["up", "down", "right", "left"]:
+        for name in self.MOVES:
             icon = QIcon("Images/{}.png".format(name))
             button = QPushButton(icon, "   Rotate the cube to {}".format(name), self)
-            # Set the button position and size
             button.setGeometry(650, 100 * iteration, 500, 50)
-             # Set the button style using CSS
             button.setStyleSheet(
                 "QPushButton {"
                 
                 "   color: #081B2A;"
                 "   font-size: 16px;"
                 "   font-weight: bold;"
-                #"   border-radius: 10px;"
                 "}"
                 "QPushButton:hover {"
                 "   background-color: #1a5ebd;"
@@ -201,8 +167,3 @@ class FirstPage(QMainWindow):
             self.list_buttons.append(button)
 
         for button in self.list_buttons:  button.show()
-        
-
-
-        
-        
