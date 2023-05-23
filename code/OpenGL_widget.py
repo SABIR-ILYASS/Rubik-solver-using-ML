@@ -48,8 +48,22 @@ def draw_cube():
     ]
 
     glBegin(GL_QUADS)
+    glColor3f(1.0, 1.0, 1.0)
     for face in faces:
         for vertex in face:
             x, y, z = vertices[vertex]
             glVertex3f(x, y, z)
+    glEnd()
+
+    # Ajouter des lignes pour diviser le cube en deux
+    glColor3f(0.0, 1.0, 0.0)  # Couleur des lignes (blanc)
+    glDisable(GL_LINE_STIPPLE)
+    glBegin(GL_LINES)
+    glVertex3f(0.5, 0, 0)  # Ligne verticale au milieu de la face inférieure
+    glVertex3f(0.5, 1, 0)
+    glEnd()
+    glDisable(GL_LINE_STIPPLE)
+    glBegin(GL_LINES)
+    glVertex3f(0.5, 0, 1)  # Ligne verticale au milieu de la face supérieure
+    glVertex3f(0.5, 1, 1)
     glEnd()
