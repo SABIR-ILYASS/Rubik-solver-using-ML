@@ -36,9 +36,13 @@ class FillingFace(QDialog):
 
         self.titleLabel.show()
 
-        self.face_widget = QWidget(self)
+        self.face_widget = QLabel(self)
         self.face_widget.setGeometry(10, 60, 480, 500)
-        self.face_widget.setStyleSheet("background-color: #FFFFFF;")
+        self.face_widget.setStyleSheet(
+            "   background-color: white;"
+            "   border-radius: 10px;"
+        )
+        self.face_widget.show()
         """
 
         self.COLORS = ["White", "Yellow", "Red", "Orange", "Blue", "Green"]
