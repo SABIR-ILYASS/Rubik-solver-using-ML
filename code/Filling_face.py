@@ -1,6 +1,7 @@
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
+from Style import *
 
 class FillingFace(QDialog):
     def __init__(self, parent=None):
@@ -16,24 +17,9 @@ class FillingFace(QDialog):
             background-size: 100% auto;  
             background-repeat: no-repeat;
         """)
+
         self.titleLabel = QLabel("Filling the face number: {}".format(1), self)
-        self.titleLabel.setGeometry(30, 10, 480, 50)
-        # add a shadow effect to the title label
-        shadow = QGraphicsDropShadowEffect()
-        shadow.setBlurRadius(28)
-        shadow.setColor(QColor(0, 0, 0, 100))
-        shadow.setOffset(0, 0)
-        self.titleLabel.setGraphicsEffect(shadow)
-
-        font = QFont()
-        font.setPointSize(30)
-        font.setFamily("Gabriola")
-        font.setBold(True)
-
-        self.titleLabel.setFont(font)
-        self.titleLabel.setAlignment(Qt.AlignCenter)
-        self.titleLabel.setStyleSheet("color: #a3f9ff;")
-
+        set_title_style(self.titleLabel, [30, 10, 480, 50], 30)
         self.titleLabel.show()
 
         self.face_widget = QLabel(self)

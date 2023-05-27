@@ -87,7 +87,7 @@ class FirstPage(QMainWindow):
             "}"
             "QPushButton:hover {"
             "   background-color: #1a5ebd;"
-            "   color: white;;"
+            "   color: white;"
             "}"
         )
 
@@ -107,20 +107,6 @@ class FirstPage(QMainWindow):
         help_dialog.exec_()
 
     def show_white_widget(self):
-        """
-        self.hide_window_title()
-        self.hide_manually_button()
-        if self.white_widget is None:
-            self.widget_3d = QLabel(self)
-            self.widget_3d.setGeometry(10, 10, 580, 500)
-            self.widget_3d.setStyleSheet(
-            "   background-color: white;" 
-            "   border-radius: 10px;"
-            )
-        self.widget_3d.show()
-        self.show_buttons()
-        self.show_colors()
-        """
         hide(self.titleLabel)
         hide(self.manually_button)
 
@@ -161,7 +147,6 @@ class FirstPage(QMainWindow):
     def show_colors(self):
         title_color = QLabel("Choose the \n color:", self)
         set_title_style(title_color, [10, 520, 100, 50], 10)
-        title_color.setGeometry(10, 520, 100, 50)
         title_color.show()
 
         button = QPushButton("Fill in the face", self)
