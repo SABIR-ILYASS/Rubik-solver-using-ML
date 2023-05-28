@@ -122,7 +122,9 @@ class FirstPage(QMainWindow):
         self.show_Window_title(False)
 
         iteration = 2
-        for name in self.MOVES:
+        rotations = [(0, 90, 0), (0, -90, 0), (90, 0, 0), (-90, 0, 0)]
+
+        for name, rotation in zip(self.MOVES, rotations):
             icon = QIcon("C:/Users/sabir/Desktop/rubik_solver/Images/{}.png".format(name))
             button = QPushButton(icon, "   Rotate the cube to {}".format(name), self)
             button.setGeometry(650, 100 * iteration, 500, 50)
@@ -141,8 +143,11 @@ class FirstPage(QMainWindow):
 
             iteration += 1
             self.list_buttons.append(button)
+            button.clicked.connect(lambda rotation_x=rotation[0], rotation_y=rotation[1], rotation_z=rotation[2]: self.rotation(rotation_x, rotation_y, rotation_z))
 
-        for button in self.list_buttons:  button.show()
+
+        for button in self.list_buttons:  
+            button.show()
 
     def show_colors(self):
         title_color = QLabel("Choose the \n color:", self)
@@ -168,3 +173,8 @@ class FirstPage(QMainWindow):
     def open_window(self):
         self.fenetre_non_modale = FillingFace(self)
         self.fenetre_non_modale.show()
+    
+    def rotation(self, rotation_x, rotation_y, rotation_z):
+        self.white_widget.rotate_cubes(rotation_x, rotation_y, rotation_z)
+        
+    

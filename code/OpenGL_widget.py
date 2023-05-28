@@ -32,6 +32,9 @@ class PygameWidget(QOpenGLWidget):
                 for z in l:
                     self.list_cube.append(Cube(self.colors[index % 6], [x, y, z]))
                     index += 1
+
+        pygame.init()
+        pygame.display.set_mode((1, 1), pygame.OPENGL | pygame.DOUBLEBUF)
         
 
     def initializeGL(self):
@@ -52,6 +55,20 @@ class PygameWidget(QOpenGLWidget):
         gluPerspective(45.0, float(width) / float(height), 0.1, 50.0)
         glMatrixMode(GL_MODELVIEW)
 
+    def rotate_cubes(self, angle_x, angle_y, angle_z):
+        glPushMatrix()
+        glRotatef(angle_x, 1.0, 0.0, 0.0)
+        glRotatef(angle_y, 0.0, 1.0, 0.0)
+        glRotatef(angle_z, 0.0, 0.0, 1.0)
+
+        for cube in self.list_cube:
+            glPushMatrix()
+            glTranslatef(*cube.translation)
+            cube.draw_cube()
+            glPopMatrix()
+
+        glPopMatrix()
+
     def paintGL(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
@@ -59,9 +76,16 @@ class PygameWidget(QOpenGLWidget):
         glRotatef(30, 1.0, 0.0, 0.0)
         glRotatef(30, 0.0, 1.0, 0.0)
 
+        current_time = pygame.time.get_ticks()
+        elapsed_time = current_time - self.last_time
+        self.last_time = current_time
+        rotation_angle = (self.rotation_speed / 1000.0) * elapsed_time
+
         
         for cube in self.list_cube:
             glPushMatrix()
             glTranslatef(*cube.translation)
             cube.draw_cube()
             glPopMatrix()
+        
+        self.rotate_cubes(rotation_angle, rotation_angle, rotation_angle)
